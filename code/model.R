@@ -1,3 +1,8 @@
+if(require(MCMCpack) == FALSE){
+    install.packages("MCMCpack", dependencies = TRUE)
+}
+library(MCMCpack)
+
 gibbs_sampling_beta = function(y, X, beta0, sigma, Sigma0){
     d = ncol(X)
     Sigma = solve(sigma^2*t(X)%*%X + Sigma0)
