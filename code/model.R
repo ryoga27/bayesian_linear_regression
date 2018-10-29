@@ -22,7 +22,7 @@ gibbs_sampling_sigma = function(y, X, beta, s0, nu0){
 regression = function(
     y, x, iter_max = 1000, burn_in = 100,
     d = ncol(x) + 1, beta0 = rep(0, length = d),
-    sima0 = 1, Sigma0 = diag(d)
+    sigma0 = 1, Sigma0 = diag(d), s0 = 0.001, nu0 = 2
 ){
     y = as.matrix(y)
     X = as.matrix(cbind(1, x))
@@ -38,7 +38,7 @@ regression = function(
 
     for(s in 1:iter_max){
         beta_array[, s+1] = gibbs_sampling_beta(y = y, X = X, beta = beta_array[, s], sigma = sigma_array[s], Sigma0)
-        sigma_array[s+1] = gibbs_sampling_sigma(y = y, X = X, beta = beta, s0 = s0, nu0 = nu0)
+        sigma_array[s+1] = gibbs_sampling_sigma(y = y, X = X, beta = beta_array[, s], s0 = s0, nu0 = nu0)
         if(s %% 100 == 0){
             cat("number of iteration is:", s, "\n")
         }
